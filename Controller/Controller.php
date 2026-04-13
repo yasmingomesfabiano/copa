@@ -84,7 +84,7 @@ class Controller {
             ];
 
             if ($this->selecao->atualizarDados($dados)) {
-                header('Location: index.php?status=Atualizado com sucesso!');
+                header('Location: index.php?status=sucesso&msg=Atualizado com sucesso!');
                 exit();
             } else {
                 header('Location: index.php?status=erro&msg=Erro ao atualizar!');

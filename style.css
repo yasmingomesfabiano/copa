@@ -59,7 +59,7 @@ table {
     border-collapse: collapse;
     width: 98%;
     margin: 0;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.20);
     background: white;
     border-radius: 12px;
     overflow: hidden;
