@@ -25,17 +25,20 @@ body::before {
     z-index: -1;
 }
 
+
 h1, .AdicionarSelecao {
     margin: 20px 0 15px 0;
     font-size: clamp(2.5em, 6vw, 4em);
     font-weight: 900;
-    font-size: 70px;
-    font-family: 'Slugs Racer', sans-serif;
+    font-size: 90px;
+    font-family: 'Snaps Taste Outline', sans-serif;
+    font-family: 'Snaps Taste', sans-serif;
     text-align: center;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
     line-height: 1.1;
     width: 100%;
     padding: 10px 20px;
+
 
     background: linear-gradient(100deg, #00a6fb, #00a6fb, #00a6fb);
     -webkit-background-clip: text;
@@ -46,6 +49,7 @@ h1, .AdicionarSelecao {
 
 
 
+
 .content {
     max-width: 1200px;
     margin: 0 auto;
@@ -53,7 +57,9 @@ h1, .AdicionarSelecao {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    flex: 1;
 }
+
 
 table {
     border-collapse: collapse;
@@ -64,6 +70,7 @@ table {
     border-radius: 12px;
     overflow: hidden;
 }
+
 
 th {
     background: linear-gradient(125deg, #00a6fb, #0582ca, #00a6fb);
@@ -76,6 +83,7 @@ th {
     letter-spacing: 1px;
 }
 
+
 td {
     padding: 18px 15px;
     border-bottom: 1px solid #f0f0f0;
@@ -84,9 +92,11 @@ td {
     text-align: center;
 }
 
+
 tr:hover td {
     background: #f8f9ff;
 }
+
 
 .btn_novaSelecao{
     background:#2196F3;
@@ -103,6 +113,28 @@ tr:hover td {
 }
 
 
+.btn_voltar{
+    display: block;
+    margin: 20px auto 0;
+    background:#2196F3;
+    color:white;
+    padding:10px 20px;
+    text-decoration:none;
+    border-radius:5px;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: none;
+    width: fit-content;
+}
+
+
+.btn_voltar:hover {
+    background: #1976D2 !important;
+    transform: translateY(-2px);
+}
+
+
+
 img {
     width: 50px;
     height: 38px;
@@ -112,12 +144,17 @@ img {
     border: 3px solid #fff;
 }
 
+
 .actions {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
+   
 }
+
+
+
 
 .actions a.edit {
     background: #2196F3 !important;
@@ -129,10 +166,12 @@ img {
     transition: all 0.3s;
 }
 
+
 .actions a.edit:hover {
     background: #1976D2 !important;
     transform: translateY(-2px);
 }
+
 
 .actions a.delete {
     background: #f44336 !important;
@@ -144,10 +183,29 @@ img {
     transition: all 0.3s;
 }
 
+
 .actions a.delete:hover {
     background: #d32f2f !important;
     transform: translateY(-2px);
 }
+.btn_elenco {
+    display: inline-block;
+    background: #1b263b;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-left: 8px;
+}
+
+
+.btn_elenco:hover {
+    background: #1976D2;
+    transform: translateY(-2px);
+}
+
 
 .success {
     background: #d4edda;
@@ -161,6 +219,7 @@ img {
     animation: slideIn 0.3s ease-out;
 }
 
+
 .error {
     background: #f8d7da;
     color: #721c24;
@@ -173,19 +232,23 @@ img {
     animation: slideIn 0.3s ease-out;
 }
 
+
 @keyframes slideIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
+
 .success.fadeOut, .error.fadeOut {
     animation: fadeOut 0.5s ease-in forwards;
 }
+
 
 @keyframes fadeOut {
     from { opacity: 1; transform: translateY(0); }
     to { opacity: 0; transform: translateY(-20px); height: 0; margin: 0; padding: 0; }
 }
+
 
 .empty {
     text-align: center;
@@ -195,11 +258,13 @@ img {
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
+
 .empty h2 {
     color: #1b263b;
     margin: 0 0 15px;
     font-size: 1.8em;
 }
+
 
 .empty a {
     background: #0582ca;
@@ -212,14 +277,17 @@ img {
     display: inline-block;
 }
 
+
 .empty a:hover {
     background: #00a6fb;
     transform: scale(1.05);
 }
 
+
 .form-group {
     margin-bottom: 20px;
 }
+
 
 .form-group label {
     display: block;
@@ -227,6 +295,7 @@ img {
     margin-bottom: 5px;
     color: #333;
 }
+
 
 .form-group input, .form-group select {
     width: 100%;
@@ -237,10 +306,12 @@ img {
     font-size: 16px;
 }
 
+
 .form-group input:focus, .form-group select:focus {
     border-color: #00a6fb;
     outline: none;
 }
+
 
 .btn-save {
     background: #1976D2;
@@ -254,10 +325,12 @@ img {
     transition: all 0.3s;
 }
 
+
 .btn-save:hover {
     background: #1976D2;
     transform: translateY(-2px);
 }
+
 
 .btn-cancel {
     background: #6c757d;
@@ -270,9 +343,11 @@ img {
     transition: all 0.3s;
 }
 
+
 .btn-cancel:hover {
     background: #545b62;
 }
+
 
 .filter-container {
     background: white;
@@ -284,6 +359,7 @@ img {
     margin-bottom: 20px;
 }
 
+
 .filter-form {
     display: flex;
     gap: 10px;
@@ -293,6 +369,7 @@ img {
     margin-bottom: 30px;
 }
 
+
 .filter-form select {
     padding: 12px 20px;
     border: 2px solid #ddd;
@@ -301,6 +378,7 @@ img {
     background: white;
     min-width: 150px;
 }
+
 
 .filter-form button {
     background: #00a6fb;
@@ -312,9 +390,11 @@ img {
     font-weight: 600;
 }
 
+
 .filter-form button:hover {
     background: #0582ca;
 }
+
 
 .btn-clear {
     background: #1b263b;
@@ -326,9 +406,18 @@ img {
     text-align: center;
 }
 
+
 .btn-clear:hover {
     background: #545b62;
 }
+
+.paginacao {
+    margin-top: auto;
+    text-align: center;
+    padding: 30px 0 10px;
+    width: 100%;
+}
+
 .paginacao .pag-btn {
     display: inline-block;
     padding: 12px 16px;
@@ -342,17 +431,20 @@ img {
     transition: all 0.3s;
 }
 
+
 .paginacao .pag-btn:hover {
     background: #e9ecef;
     color: #fff;
     transform: translateY(-1px);
 }
 
+
 .paginacao .pag-btn.ativo {
     background: #00a6fb !important;
     color: white !important;
     border-color: #00a6fb;
 }
+
 @media (max-width: 768px) {
     body { padding: 10px; }
     table { font-size: 0.9em; }

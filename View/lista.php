@@ -7,9 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="/assets/icone.png">
-    <link href="https://fonts.cdnfonts.com/css/fear" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/slugs-racer" rel="stylesheet">
-                
+    <link href="https://fonts.cdnfonts.com/css/snaps-taste-outline" rel="stylesheet">           
     <title>Seleções da Copa</title>
 </head>
 <body>
@@ -73,7 +71,11 @@
                         <td><?= htmlspecialchars($lista['titulos'] ?? '-') ?></td>
                         <td class="actions">
                             <a href="?action=editar&id=<?= $lista['id'] ?>" class="edit">Editar</a>
-                            <a href="?action=deletar&id=<?= $lista['id'] ?>" class="delete" onclick="return confirm('Excluir <?= htmlspecialchars($lista['nome'] ?? '') ?>?')">Excluir</a>
+                            <a href="?action=deletar&id=<?= $lista['id'] ?>" class="delete" 
+                            onclick="return confirm('Excluir <?= htmlspecialchars($lista['nome'] ?? '') ?>?')">
+                                Excluir
+                            </a>
+                                <a href="index.php?action=elenco&id=<?= $lista['id'] ?>" class="btn_elenco">Ver Elenco</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

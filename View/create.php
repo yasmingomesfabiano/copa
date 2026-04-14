@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Seleção</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.cdnfonts.com/css/slugs-racer" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/assets/icone.png">
+    <link href="https://fonts.cdnfonts.com/css/snaps-taste-outline" rel="stylesheet">
+                
+          
 </head>
 
 <body>
