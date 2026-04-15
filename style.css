@@ -25,7 +25,6 @@ body::before {
     z-index: -1;
 }
 
-
 h1, .AdicionarSelecao {
     margin: 20px 0 15px 0;
     font-size: clamp(2.5em, 6vw, 4em);
@@ -38,17 +37,12 @@ h1, .AdicionarSelecao {
     line-height: 1.1;
     width: 100%;
     padding: 10px 20px;
-
-
     background: linear-gradient(100deg, #00a6fb, #00a6fb, #00a6fb);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
 }
-
-
-
 
 .content {
     max-width: 1200px;
@@ -60,17 +54,14 @@ h1, .AdicionarSelecao {
     flex: 1;
 }
 
-
 table {
     border-collapse: collapse;
     width: 98%;
     margin: 0;
     box-shadow: 0 4px 20px rgba(0,0,0,0.20);
     background: white;
-    border-radius: 12px;
-    overflow: hidden;
+    overflow: visible;
 }
-
 
 th {
     background: linear-gradient(125deg, #00a6fb, #0582ca, #00a6fb);
@@ -81,8 +72,8 @@ th {
     text-transform: uppercase;
     font-size: 0.85em;
     letter-spacing: 1px;
+    border-radius: 0px 0px 15px 15px;
 }
-
 
 td {
     padding: 18px 15px;
@@ -92,11 +83,40 @@ td {
     text-align: center;
 }
 
-
 tr:hover td {
     background: #f8f9ff;
 }
+.actions a.edit {
+    background: #2196F3 !important;
+    color: white !important;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
 
+.actions a.delete {
+    background: #f44336 !important;
+    color: white !important;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn_elenco {
+    display: inline-block;
+    background: #1b263b;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-left: 8px;
+}
 
 .btn_novaSelecao{
     background:#2196F3;
@@ -112,7 +132,6 @@ tr:hover td {
     transform: translateY(-2px);
 }
 
-
 .btn_voltar{
     display: block;
     margin: 20px auto 0;
@@ -127,13 +146,10 @@ tr:hover td {
     width: fit-content;
 }
 
-
 .btn_voltar:hover {
     background: #1976D2 !important;
     transform: translateY(-2px);
 }
-
-
 
 img {
     width: 50px;
@@ -144,68 +160,66 @@ img {
     border: 3px solid #fff;
 }
 
-
 .actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-   
+    position: relative;
+    text-align: center;
 }
 
-
-
-
-.actions a.edit {
-    background: #2196F3 !important;
-    color: white !important;
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 500;
-    transition: all 0.3s;
-}
-
-
-.actions a.edit:hover {
-    background: #1976D2 !important;
-    transform: translateY(-2px);
-}
-
-
-.actions a.delete {
-    background: #f44336 !important;
-    color: white !important;
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 500;
-    transition: all 0.3s;
-}
-
-
-.actions a.delete:hover {
-    background: #d32f2f !important;
-    transform: translateY(-2px);
-}
-.btn_elenco {
+.kebab-menu {
+    position: relative;
     display: inline-block;
-    background: #1b263b;
+}
+
+.kebab-btn {
+    background: #0582ca;
     color: #fff;
-    padding: 8px 14px;
-    border-radius: 6px;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.kebab-btn:hover {
+    background: #1b263b;
+    transform: scale(1.05);
+}
+
+.kebab-menu-list {
+    position: absolute;
+    right: 0;
+    top: 45px;
+    background: #fff;
+    min-width: 160px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    overflow: hidden;
+    z-index: 50;
+}
+
+.kebab-menu-list[hidden] {
+    display: none;
+}
+
+.kebab-menu-list a {
+    display: block;
+    padding: 10px 14px;
+    color: #1b263b;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s ease;
-    margin-left: 8px;
+    font-size: 14px;
+    text-align: left;
+    transition: 0.2s;
 }
 
-
-.btn_elenco:hover {
-    background: #1976D2;
-    transform: translateY(-2px);
+.kebab-menu-list a:hover {
+    background: #f1f5f9;
 }
-
 
 .success {
     background: #d4edda;
@@ -219,7 +233,6 @@ img {
     animation: slideIn 0.3s ease-out;
 }
 
-
 .error {
     background: #f8d7da;
     color: #721c24;
@@ -232,23 +245,19 @@ img {
     animation: slideIn 0.3s ease-out;
 }
 
-
 @keyframes slideIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-
 .success.fadeOut, .error.fadeOut {
     animation: fadeOut 0.5s ease-in forwards;
 }
-
 
 @keyframes fadeOut {
     from { opacity: 1; transform: translateY(0); }
     to { opacity: 0; transform: translateY(-20px); height: 0; margin: 0; padding: 0; }
 }
-
 
 .empty {
     text-align: center;
@@ -258,13 +267,11 @@ img {
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
-
 .empty h2 {
     color: #1b263b;
     margin: 0 0 15px;
     font-size: 1.8em;
 }
-
 
 .empty a {
     background: #0582ca;
@@ -277,17 +284,14 @@ img {
     display: inline-block;
 }
 
-
 .empty a:hover {
     background: #00a6fb;
     transform: scale(1.05);
 }
 
-
 .form-group {
     margin-bottom: 20px;
 }
-
 
 .form-group label {
     display: block;
@@ -295,7 +299,6 @@ img {
     margin-bottom: 5px;
     color: #333;
 }
-
 
 .form-group input, .form-group select {
     width: 100%;
@@ -306,12 +309,10 @@ img {
     font-size: 16px;
 }
 
-
 .form-group input:focus, .form-group select:focus {
     border-color: #00a6fb;
     outline: none;
 }
-
 
 .btn-save {
     background: #1976D2;
@@ -325,12 +326,10 @@ img {
     transition: all 0.3s;
 }
 
-
 .btn-save:hover {
     background: #1976D2;
     transform: translateY(-2px);
 }
-
 
 .btn-cancel {
     background: #6c757d;
@@ -343,11 +342,9 @@ img {
     transition: all 0.3s;
 }
 
-
 .btn-cancel:hover {
     background: #545b62;
 }
-
 
 .filter-container {
     background: white;
@@ -359,7 +356,6 @@ img {
     margin-bottom: 20px;
 }
 
-
 .filter-form {
     display: flex;
     gap: 10px;
@@ -369,7 +365,6 @@ img {
     margin-bottom: 30px;
 }
 
-
 .filter-form select {
     padding: 12px 20px;
     border: 2px solid #ddd;
@@ -378,7 +373,6 @@ img {
     background: white;
     min-width: 150px;
 }
-
 
 .filter-form button {
     background: #00a6fb;
@@ -390,11 +384,9 @@ img {
     font-weight: 600;
 }
 
-
 .filter-form button:hover {
     background: #0582ca;
 }
-
 
 .btn-clear {
     background: #1b263b;
@@ -405,7 +397,6 @@ img {
     font-weight: 600;
     text-align: center;
 }
-
 
 .btn-clear:hover {
     background: #545b62;
@@ -422,7 +413,7 @@ img {
     display: inline-block;
     padding: 12px 16px;
     margin: 0 2px;
-    background:  #1976D2;
+    background: #1976D2;
     color: #fff;
     text-decoration: none;
     border-radius: 6px;
@@ -431,18 +422,51 @@ img {
     transition: all 0.3s;
 }
 
-
 .paginacao .pag-btn:hover {
     background: #e9ecef;
     color: #fff;
     transform: translateY(-1px);
 }
 
-
 .paginacao .pag-btn.ativo {
     background: #00a6fb !important;
     color: white !important;
     border-color: #00a6fb;
+}
+.dashboard-mini {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin-bottom: 12px;
+    justify-content: center;
+    align-items: center;
+}
+.card-mini {
+    background: #fff;
+    border: 1px solid #00a6fb;
+    border-radius: 8px;
+    padding: 8px 12px;
+    width: 180px;
+    min-height: 70px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.card-mini span {
+    display: block;
+    font-size: 15px;
+    color: #00a6fb;
+    margin-bottom: 4px;
+}
+
+.card-mini strong {
+    font-size: 20px;
+    color: #222;
+}
+
+@media (max-width: 768px) {
+    .dashboard-mini {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 768px) {

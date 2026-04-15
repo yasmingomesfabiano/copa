@@ -33,19 +33,20 @@ class Jogador {
         }
     }
 
-    public function atualizarDados($dados) {
+    public function atualizar($dados) {
         try {
-            $query = "UPDATE " . $this->table . "
-                      SET nome = :nome, posicao = :posicao, numeroCamisa = :numeroCamisa, selecao_id = :selecao_id
-                      WHERE id = :id";
-            $stmt = $this->conn->prepare($query);
-
-            $stmt->bindValue(':nome', $dados['nome']);
-            $stmt->bindValue(':posicao', $dados['posicao']);
-            $stmt->bindValue(':numeroCamisa', $dados['numeroCamisa'], PDO::PARAM_INT);
-            $stmt->bindValue(':selecao_id', $dados['selecao_id'], PDO::PARAM_INT);
-            $stmt->bindValue(':id', $dados['id'], PDO::PARAM_INT);
-
+            $sql = "UPDATE jogadores
+                    SET nome = :nome,
+                        posicao = :posicao,
+                        numeroCamisa = :numeroCamisa
+                    WHERE id = :id";
+    
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue(':nome', $dados['nome'], PDO::PARAM_STR);
+            $stmt->bindValue(':posicao', $dados['posicao'], PDO::PARAM_STR);
+            $stmt->bindValue(':numeroCamisa', (int)$dados['numeroCamisa'], PDO::PARAM_INT);
+            $stmt->bindValue(':id', (int)$dados['id'], PDO::PARAM_INT);
+    
             return $stmt->execute();
         } catch (PDOException $e) {
             return false;
@@ -91,4 +92,6 @@ class Jogador {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    
 }

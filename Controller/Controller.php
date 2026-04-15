@@ -16,16 +16,20 @@ class Controller {
         $grupo = $_GET['grupo'] ?? '';
         $pagina = max(1, (int)($_GET['pagina'] ?? 1));
         $limite = 6;
-
+    
         $total = $this->selecao->contarSelecoes($grupo);
         $totalPaginas = max(1, (int)ceil($total / $limite));
-
+    
         if ($pagina > $totalPaginas) {
             $pagina = $totalPaginas;
         }
-
+    
         $listas = $this->selecao->getSelecoesPaginadas($grupo, $pagina, $limite);
-
+    
+        $totalSelecoes = $this->selecao->totalSelecoes();
+        $totalTitulos = $this->selecao->totalTitulos();
+        $selecoesPorGrupo = $this->selecao->selecoesPorGrupo();
+    
         require_once './View/lista.php';
     }
 
@@ -72,37 +76,41 @@ class Controller {
             exit();
         }
     }
+    public function deletar($id) {
+        if ($this->selecao->deletar($id)) {
+            header('Location: index.php?status=sucesso&msg=Excluído com sucesso!');
+            exit();
+        }
+    
+        header('Location: index.php?status=erro&msg=Erro ao excluir!');
+        exit();
+    }
 
     public function atualizarDados() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dados = [
                 'id' => (int)($_POST['id'] ?? 0),
-                'nome' => htmlspecialchars(trim($_POST['nome'] ?? ''), ENT_QUOTES, 'UTF-8'),
-                'grupo' => htmlspecialchars(trim($_POST['grupo'] ?? ''), ENT_QUOTES, 'UTF-8'),
+                'nome' => trim($_POST['nome'] ?? ''),
+                'grupo' => trim($_POST['grupo'] ?? ''),
                 'titulos' => (int)($_POST['titulos'] ?? 0),
-                'bandeira' => $_POST['bandeira'] ?? ''
+                'bandeira' => trim($_POST['bandeira'] ?? '')
             ];
-
+    
+            if ($dados['id'] <= 0 || $dados['nome'] === '' || $dados['grupo'] === '' || $dados['titulos'] < 0) {
+                header('Location: index.php?status=erro&msg=Preencha todos os dados');
+                exit();
+            }
+    
             if ($this->selecao->atualizarDados($dados)) {
                 header('Location: index.php?status=sucesso&msg=Atualizado com sucesso!');
                 exit();
-            } else {
-                header('Location: index.php?status=erro&msg=Erro ao atualizar!');
-                exit();
             }
-        }
-
-        header('Location: index.php');
-        exit();
-    }
-
-    public function delete($id) {
-        if ($this->selecao->deletar($id)) {
-            header('Location: index.php?status=sucesso&msg=Excluído com sucesso!');
+    
+            header('Location: index.php?status=erro&msg=Erro ao atualizar!');
             exit();
         }
-
-        header('Location: index.php?status=erro&msg=Erro ao excluir!');
+    
+        header('Location: index.php');
         exit();
     }
 

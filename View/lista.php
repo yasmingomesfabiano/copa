@@ -43,7 +43,23 @@
             <a href="index.php" class="btn-clear">Limpar</a>
             <?php endif; ?>
         </form>
-    </div>
+            </div>
+            <div class="dashboard-mini">
+                <div class="card-mini">
+                    <span>Total de Seleções</span>
+                    <strong><?= $totalSelecoes ?></strong>
+                </div>
+
+                <div class="card-mini">
+                    <span>Total de Títulos</span>
+                    <strong><?= $totalTitulos ?></strong>
+                </div>
+
+                <div class="card-mini">
+                    <span>Grupos</span>
+                    <strong><?= count($selecoesPorGrupo ?? []) ?></strong>
+                </div>
+            </div>
 
     <?php if (!empty($listas ?? [])): ?>
         <table>
@@ -70,12 +86,20 @@
                         <td><?= htmlspecialchars($lista['nome'] ?? '-') ?></td>
                         <td><?= htmlspecialchars($lista['titulos'] ?? '-') ?></td>
                         <td class="actions">
-                            <a href="?action=editar&id=<?= $lista['id'] ?>" class="edit">Editar</a>
-                            <a href="?action=deletar&id=<?= $lista['id'] ?>" class="delete" 
-                            onclick="return confirm('Excluir <?= htmlspecialchars($lista['nome'] ?? '') ?>?')">
-                                Excluir
-                            </a>
-                                <a href="index.php?action=elenco&id=<?= $lista['id'] ?>" class="btn_elenco">Ver Elenco</a>
+                            <div class="kebab-menu">
+                                <button class="kebab-btn" type="button" onclick="toggleMenu(<?= $lista['id'] ?>)">
+                                    ⋮
+                                </button>
+
+                                <div class="kebab-menu-list" id="menu-<?= $lista['id'] ?>" hidden>
+                                    <a href="?action=editar&id=<?= $lista['id'] ?>">Editar</a>
+                                    <a href="?action=deletar&id=<?= $lista['id'] ?>"
+                                    onclick="return confirm('Excluir <?= htmlspecialchars($lista['nome'] ?? '') ?>?')">
+                                        Excluir
+                                    </a>
+                                    <a href="index.php?action=elenco&id=<?= $lista['id'] ?>">Ver Elenco</a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -88,19 +112,6 @@
         </div>
     <?php endif; ?>
     
-
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const mensagens = document.querySelectorAll('.success, .error');
-        mensagens.forEach(function(msg) {
-            setTimeout(function() {
-                msg.classList.add('fadeOut');
-                setTimeout(function() { if (msg.parentNode) msg.parentNode.removeChild(msg); }, 500);
-            }, 2000);
-        });
-    });
-    </script>
 
 <div class="paginacao" style="text-align:center;margin:30px 0;">
         <?php if($pagina > 1): ?>
@@ -127,5 +138,44 @@
         
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mensagens = document.querySelectorAll('.success, .error');
+            mensagens.forEach(function(msg) {
+                setTimeout(function() {
+                    msg.classList.add('fadeOut');
+                    setTimeout(function() { if (msg.parentNode) msg.parentNode.removeChild(msg); }, 500);
+                }, 2000);
+            });
+        });
+        function toggleMenu(id) {
+            const menu = document.getElementById('menu-' + id);
+            if (!menu) return;
+
+            const isHidden = menu.hasAttribute('hidden');
+
+            document.querySelectorAll('.kebab-menu-list').forEach(m => m.setAttribute('hidden', true));
+
+            if (isHidden) {
+                menu.removeAttribute('hidden');
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.kebab-menu')) {
+                document.querySelectorAll('.kebab-menu-list').forEach(m => m.setAttribute('hidden', true));
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const mensagens = document.querySelectorAll('.success, .error');
+            mensagens.forEach(function(msg) {
+                setTimeout(function() {
+                    msg.classList.add('fadeOut');
+                    setTimeout(function() { if (msg.parentNode) msg.parentNode.removeChild(msg); }, 500);
+                }, 2000);
+            });
+        });
+</script>
 </body>
 </html>

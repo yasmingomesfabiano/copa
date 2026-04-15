@@ -33,21 +33,23 @@ class Selecao {
 
     public function atualizarDados($dados) {
         try {
-            $query = "UPDATE " . $this->table . " SET nome = :nome, grupo = :grupo, titulos = :titulos, bandeira = :bandeira WHERE id = :id";
+            $query = "UPDATE " . $this->table . "
+                      SET nome = :nome, grupo = :grupo, titulos = :titulos, bandeira = :bandeira
+                      WHERE id = :id";
+    
             $stmt = $this->conn->prepare($query);
     
-            $stmt->bindParam(':nome', $dados['nome']);
-            $stmt->bindParam(':grupo', $dados['grupo']);
-            $stmt->bindParam(':titulos', $dados['titulos']);
-            $stmt->bindParam(':bandeira', $dados['bandeira']);
-            $stmt->bindParam(':id', $dados['id']);
+            $stmt->bindValue(':nome', $dados['nome'], PDO::PARAM_STR);
+            $stmt->bindValue(':grupo', $dados['grupo'], PDO::PARAM_STR);
+            $stmt->bindValue(':titulos', (int)$dados['titulos'], PDO::PARAM_INT);
+            $stmt->bindValue(':bandeira', $dados['bandeira'], PDO::PARAM_STR);
+            $stmt->bindValue(':id', (int)$dados['id'], PDO::PARAM_INT);
     
             return $stmt->execute();
         } catch (PDOException $e) {
             return false;
         }
     }
-
     public function buscarId($id) {
         $query = " SELECT * FROM " . $this->table . " WHERE id = ? LIMIT 1 ";
         $stmt = $this->conn->prepare($query);
@@ -86,11 +88,9 @@ class Selecao {
         $offset = ($pagina - 1) * $limite;
     
         $sql = "SELECT * FROM " . $this->table . " WHERE 1=1";
-        $params = [];
     
         if (!empty($grupo)) {
             $sql .= " AND grupo = :grupo";
-            $params[':grupo'] = $grupo;
         }
     
         $sql .= " ORDER BY grupo, nome LIMIT :limite OFFSET :offset";
@@ -123,6 +123,28 @@ class Selecao {
         }
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+    public function totalSelecoes() {
+        $sql = "SELECT COUNT(*) AS total FROM selecoes";
+        $stmt = $this->conn->query($sql);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int)($row['total'] ?? 0);
+    }
+    
+    public function totalTitulos() {
+        $sql = "SELECT COALESCE(SUM(titulos), 0) AS total FROM selecoes";
+        $stmt = $this->conn->query($sql);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int)($row['total'] ?? 0);
+    }
+    
+    public function selecoesPorGrupo() {
+        $sql = "SELECT grupo, COUNT(*) AS total
+                FROM selecoes
+                GROUP BY grupo
+                ORDER BY grupo";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 }
 ?>

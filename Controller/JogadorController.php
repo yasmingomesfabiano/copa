@@ -36,33 +36,60 @@ class JogadorController {
     
         require_once 'View/elenco.php';
     }
-
     public function adicionarJogador($selecao_id) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dados = [
-                'nome'          => $_POST['nome'] ?? '',
-                'posicao'       => $_POST['posicao'] ?? '',
-                'numeroCamisa'  => $_POST['numeroCamisa'] ?? 0,
-                'selecao_id'    => $selecao_id
+                'nome' => trim($_POST['nome'] ?? ''),
+                'posicao' => trim($_POST['posicao'] ?? ''),
+                'numeroCamisa' => (int)($_POST['numeroCamisa'] ?? 0),
+                'selecao_id' => (int)$selecao_id
             ];
     
-            $success = $this->jogador->salvar($dados);
-    
-            if ($success) {
-                header('Location: index.php?action=elenco&id=' . $selecao_id . '&status=sucesso&msg=Jogador cadastrado com sucesso');
-                exit();
-            } else {
-                header('Location: index.php?action=elenco&id=' . $selecao_id . '&status=erro&msg=Erro ao cadastrar jogador');
+            if ($dados['nome'] === '' || $dados['posicao'] === '' || $dados['numeroCamisa'] <= 0 || $dados['selecao_id'] <= 0) {
+                header('Location: index.php?status=erro&msg=Preencha todos os dados');
                 exit();
             }
-        }
-
     
-        // Se for GET, mostra o formulário
+            if ($this->jogador->salvar($dados)) {
+                header('Location: index.php?action=elenco&id=' . $selecao_id . '&status=sucesso&msg=Jogador cadastrado com sucesso');
+                exit();
+            }
+    
+            header('Location: index.php?action=elenco&id=' . $selecao_id . '&status=erro&msg=Erro ao cadastrar jogador');
+            exit();
+        }
+    
         $selecao = $this->buscarSelecao($selecao_id);
-        require_once 'View/cadastrarJogador.php'; // nome do arquivo de formulário
+        require_once 'View/cadastrarJogador.php';
     }
 
+    public function atualizarJogador() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $dados = [
+                'id' => (int)($_POST['id'] ?? 0),
+                'nome' => trim($_POST['nome'] ?? ''),
+                'posicao' => trim($_POST['posicao'] ?? ''),
+                'numeroCamisa' => (int)($_POST['numeroCamisa'] ?? 0)
+            ];
+    
+            if ($dados['id'] <= 0 || $dados['nome'] === '' || $dados['posicao'] === '' || $dados['numeroCamisa'] <= 0) {
+                header('Location: index.php?status=erro&msg=Preencha todos os dados');
+                exit();
+            }
+    
+            if ($this->jogador->atualizar($dados)) {
+                $j = $this->jogador->buscarId($dados['id']);
+                header('Location: index.php?action=elenco&id=' . $j['selecao_id'] . '&status=sucesso&msg=Jogador atualizado com sucesso');
+                exit();
+            }
+    
+            header('Location: index.php?status=erro&msg=Erro ao atualizar jogador');
+            exit();
+        }
+    
+        header('Location: index.php');
+        exit();
+    }
     private function buscarSelecao($id) {
         $sql = "SELECT id, nome, grupo FROM selecoes WHERE id = ?";
         $stmt = $this->db->prepare($sql);
@@ -70,6 +97,8 @@ class JogadorController {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+
     public function editarJogador($id) {
         $jogador = $this->jogador->buscarId($id);
         if (!$jogador) {

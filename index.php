@@ -13,6 +13,8 @@ $id = $_GET['id'] ?? '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'atualizar') {
         $app->atualizarDados();
+    } elseif ($action === 'atualizarJogador') {
+        $controller->atualizarJogador();
     } elseif ($action === 'adicionarJogador') {
         $controller->adicionarJogador($id);
     } else {
@@ -29,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
 
         case 'deletar':
-            $app->delete($id);
+            $app->deletar($id);
             break;
 
         case 'listar':
