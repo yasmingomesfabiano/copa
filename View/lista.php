@@ -93,8 +93,8 @@
 
                                 <div class="kebab-menu-list" id="menu-<?= $lista['id'] ?>" hidden>
                                     <a href="?action=editar&id=<?= $lista['id'] ?>">Editar</a>
-                                    <a href="?action=deletar&id=<?= $lista['id'] ?>"
-                                    onclick="return confirm('Excluir <?= htmlspecialchars($lista['nome'] ?? '') ?>?')">
+                                    <a href="javascript:void(0)" 
+                                    onclick="openDeleteModal('<?= $lista['id'] ?>', '<?= htmlspecialchars($lista['nome'] ?? '') ?>')">
                                         Excluir
                                     </a>
                                     <a href="index.php?action=elenco&id=<?= $lista['id'] ?>">Ver Elenco</a>
@@ -138,6 +138,16 @@
         
 
     </div>
+        <div id="deleteModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirmar Exclusão</h3>
+            <p>Você tem certeza que deseja excluir <strong id="itemName"></strong>?</p>
+            <div class="modal-buttons">
+                <button onclick="closeDeleteModal()" class="btn-cancel">Cancelar</button>
+                <a id="confirmDeleteBtn" href="#" class="btn-confirm-delete">Excluir</a>
+            </div>
+        </div>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const mensagens = document.querySelectorAll('.success, .error');
@@ -176,6 +186,32 @@
                 }, 2000);
             });
         });
+        function openDeleteModal(id, nome) {
+            const modal = document.getElementById('deleteModal');
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            const nameSpan = document.getElementById('itemName');
+
+            // Define o nome da seleção no texto do modal
+            nameSpan.innerText = nome;
+            
+            // Define o link correto para deletar
+            confirmBtn.href = "?action=deletar&id=" + id;
+
+            // Mostra o modal
+            modal.style.display = 'flex';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        // Fechar se clicar fora da caixa branca
+        window.onclick = function(event) {
+            const modal = document.getElementById('deleteModal');
+            if (event.target == modal) {
+                closeDeleteModal();
+            }
+        }
 </script>
 </body>
 </html>

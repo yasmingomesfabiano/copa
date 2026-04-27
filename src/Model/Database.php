@@ -1,14 +1,19 @@
 <?php
+namespace App\Model;
+
+use PDO;
+use PDOException;
+
 class Database {
     private $host = 'localhost';
     private $db_name = 'copa_db';
     private $user = 'root';
     private $password = 'alunolab';
     public $conn;
-    
+
     public function getConnection() {
         $this->conn = null;
-    
+
         try {
             $dsn = "mysql:host={$this->host};dbname={$this->db_name};charset=utf8mb4";
             $this->conn = new PDO($dsn, $this->user, $this->password);
@@ -18,11 +23,7 @@ class Database {
             echo "Erro na conexão: " . $e->getMessage();
             die();
         }
-    
+
         return $this->conn;
     }
 }
-
-
-
-?>

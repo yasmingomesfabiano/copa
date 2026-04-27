@@ -1,5 +1,8 @@
 <?php
-require_once 'Model/Database.php';
+namespace App\Model;
+
+use PDO;
+use PDOException;
 
 class Jogador {
     private $conn;

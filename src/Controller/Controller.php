@@ -1,6 +1,10 @@
 <?php
-require_once './Model/Selecao.php';
-require_once './Model/Database.php';
+
+namespace App\Controller;
+
+use App\Model\Selecao;
+use App\Model\Database;
+use App\Helpers\FlashMessage;
 
 class Controller {
     private $db;
@@ -30,7 +34,8 @@ class Controller {
         $totalTitulos = $this->selecao->totalTitulos();
         $selecoesPorGrupo = $this->selecao->selecoesPorGrupo();
     
-        require_once './View/lista.php';
+        // Uso da constante BASE_PATH para encontrar a View na raiz
+        require_once BASE_PATH . '/View/lista.php';
     }
 
     public function listar() {
@@ -52,9 +57,9 @@ class Controller {
             }
 
             if ($this->selecao->salvar($dados)) {
-                header('Location: index.php?status=sucesso&msg= Seleção salva com sucesso!');
+                header('Location: index.php?status=sucesso&msg=Seleção salva com sucesso!');
             } else {
-                header('Location: index.php?status=erro&msg= Erro ao salvar seleção ou seleção já cadastrada!');
+                header('Location: index.php?status=erro&msg=Erro ao salvar seleção!');
             }
             exit();
         }
@@ -64,24 +69,26 @@ class Controller {
     }
 
     public function criar() {
-        require_once './View/create.php';
+        // Ajustado para usar BASE_PATH
+        require_once BASE_PATH . '/View/create.php';
     }
 
     public function editar($id) {
         $lista = $this->selecao->buscarId($id);
         if ($lista) {
-            require_once './View/editar.php';
+            // Ajustado para usar BASE_PATH
+            require_once BASE_PATH . '/View/editar.php';
         } else {
             header('Location: index.php?status=erro&msg=Não encontrado!');
             exit();
         }
     }
+
     public function deletar($id) {
         if ($this->selecao->deletar($id)) {
             header('Location: index.php?status=sucesso&msg=Excluído com sucesso!');
             exit();
         }
-    
         header('Location: index.php?status=erro&msg=Erro ao excluir!');
         exit();
     }
@@ -96,8 +103,8 @@ class Controller {
                 'bandeira' => trim($_POST['bandeira'] ?? '')
             ];
     
-            if ($dados['id'] <= 0 || $dados['nome'] === '' || $dados['grupo'] === '' || $dados['titulos'] < 0) {
-                header('Location: index.php?status=erro&msg=Preencha todos os dados');
+            if ($dados['id'] <= 0 || empty($dados['nome'])) {
+                header('Location: index.php?status=erro&msg=Dados inválidos');
                 exit();
             }
     
@@ -109,10 +116,7 @@ class Controller {
             header('Location: index.php?status=erro&msg=Erro ao atualizar!');
             exit();
         }
-    
         header('Location: index.php');
         exit();
     }
-
-    
 }
